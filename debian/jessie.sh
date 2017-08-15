@@ -80,11 +80,25 @@ wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp
 #end nginx
 
 #admin
-mkdir -p /usr/local/ahkacp
+mkdir -p /usr/local/ahkacp/ssl
 wget -qO latest.zip "https://github.com/anamunlam/ahkacp/archive/Latest.zip" --no-check-certificate
 unzip latest.zip
 cp -rf ahkacp-Latest/dist/* /usr/local/ahkacp
-rm -rf ahkacp-Latest
+rm -rf ahkacp-Latest latest.zip
+
+servername=$(hostname -f)
+mask1='(([[:alnum:]](-?[[:alnum:]])*)\.)'
+mask2='*[[:alnum:]](-?[[:alnum:]])+\.[[:alnum:]]{2,}'
+if ! [[ "$servername" =~ ^${mask1}${mask2}$ ]]; then
+  if [ ! -z "$servername" ]; then
+    servername="$servername.example.com"
+  else
+    servername="example.com"
+  fi
+fi
+
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout certificate.key -out certificate.crt \
+    -subj "/C=ID/ST=Kalimantan Selatan/L=Banjarmasin/O=AhkaNet/CN=${servername}"
 
 useradd -m admin
 echo -e "123456\n123456\n" | passwd admin
