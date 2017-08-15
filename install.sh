@@ -7,7 +7,7 @@ if [[ "$OS" != "debian" ]]; then
   exit 1
 fi
 
-INSTALL=$(wget -qO - "https://github.com/anamunlam/ahkacp/raw/master/debian/${CODENAME}.sh --no-check-certificate")
+INSTALL=$(wget -qO - "https://github.com/anamunlam/ahkacp/raw/master/debian/${CODENAME}.sh" --no-check-certificate)
 if [ "$?" -eq '0' ]; then
   bash -c "${INSTALL}"
 fi
