@@ -81,7 +81,7 @@ wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp
 
 #admin
 mkdir -p /usr/local/ahkacp
-wget -vO latest.zip "https://github.com/anamunlam/ahkacp/archive/Latest.zip" --no-check-certificate
+wget -qO latest.zip "https://github.com/anamunlam/ahkacp/archive/Latest.zip" --no-check-certificate
 unzip latest.zip
 cp -rf ahkacp-Latest/dist/* /usr/local/ahkacp
 rm -rf ahkacp-Latest
