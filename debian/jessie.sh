@@ -113,7 +113,7 @@ service nginx restart
 clear
 ahka
 echo ""
-echo "url      : https://server_ip:2083"
+echo "url      : http://server_ip:2082"
 echo "user     : admin"
 echo "password : 123456"
 next
