@@ -52,6 +52,7 @@ sed -i 's@^\(<VirtualHost\) \*\:80@\1 127.0.0.1:8080>@' /etc/apache2/sites-avail
 a2enmod proxy_fcgi setenvif
 a2enmod rewrite
 a2enconf php7.0-fpm
+service apache2 restart
 #end apache and php
 
 #nginx
@@ -107,7 +108,6 @@ echo "chdir = /" >> /etc/php/7.0/fpm/pool.d/admin.conf
 
 echo -e "${YELLOW}Restarting service...${PLAIN}"
 service php7.0-fpm restart
-service apache2 restart
 service nginx restart
 
 clear
