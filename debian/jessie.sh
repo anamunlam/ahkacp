@@ -57,7 +57,7 @@ service apache2 restart
 
 #nginx
 echo -e "${YELLOW}Installing Nginx...${PLAIN}"
-apt-get install nginx -y
+apt-get install nginx unzip -y
 
 echo -e "${YELLOW}Configuring Nginx...${PLAIN}"
 GZIP="client_body_buffer_size 10K;\n\tclient_header_buffer_size 1k;\n\tclient_max_body_size 8m;\n\tlarge_client_header_buffers 4 16k;\n\tfastcgi_buffers 16 16k;\n\tfastcgi_buffer_size 32k;\n\n\tinclude \/etc\/nginx\/cloudflare.conf;"
@@ -81,6 +81,11 @@ wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp
 
 #admin
 mkdir -p /usr/local/ahkacp
+wget -vO latest.zip "https://github.com/anamunlam/ahkacp/archive/Latest.zip"
+unzip latest.zip
+cp -rf ahkacp-Latest/dist/* /usr/local/ahkacp
+rm -rf ahkacp-Latest
+
 useradd -m admin
 echo -e "123456\n123456\n" | passwd admin
 
