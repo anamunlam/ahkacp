@@ -81,10 +81,10 @@ wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp
 
 #admin
 mkdir -p /usr/local/ahkacp/ssl
-wget -qO latest.zip "https://github.com/anamunlam/ahkacp/archive/Latest.zip" --no-check-certificate
-unzip latest.zip
-cp -rf ahkacp-Latest/dist/* /usr/local/ahkacp
-rm -rf ahkacp-Latest latest.zip
+wget -qO master.zip "https://github.com/anamunlam/ahkacp/archive/master.zip" --no-check-certificate
+unzip master.zip
+cp -rf ahkacp-master/dist/* /usr/local/ahkacp
+rm -rf ahkacp-master master.zip
 
 servername=$(hostname -f)
 mask1='(([[:alnum:]](-?[[:alnum:]])*)\.)'
