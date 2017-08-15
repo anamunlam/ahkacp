@@ -97,8 +97,7 @@ if ! [[ "$servername" =~ ^${mask1}${mask2}$ ]]; then
   fi
 fi
 
-openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout certificate.key -out certificate.crt \
-    -subj "/C=ID/ST=Kalimantan Selatan/L=Banjarmasin/O=AhkaNet/CN=${servername}"
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /usr/local/ahkacp/ssl/certificate.key -out /usr/local/ahkacp/ssl/certificate.crt -subj "/C=ID/ST=Kalimantan Selatan/L=Banjarmasin/O=AhkaNet/CN=${servername}"
 
 useradd -m admin
 echo -e "123456\n123456\n" | passwd admin
