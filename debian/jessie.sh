@@ -49,8 +49,12 @@ echo -e "${YELLOW}Configuring Apache...${PLAIN}"
 sed -i 's@^\(Listen\) 80$@\1 127.0.0.1:8080@' /etc/apache2/ports.conf
 sed -i 's@^\(<VirtualHost\) \*\:80@\1 127.0.0.1:8080>@' /etc/apache2/sites-available/000-default.conf
 
+echo "RemoteIPHeader X-Forwarded-For" > /etc/apache2/mods-enabled/remoteip.conf
+echo "RemoteIPTrustedProxy 127.0.0.1" > /etc/apache2/mods-enabled/remoteip.conf
+
 a2enmod proxy_fcgi setenvif
 a2enmod rewrite
+a2enmod remoteip
 a2enconf php7.0-fpm
 service apache2 restart
 #end apache and php
