@@ -17,7 +17,7 @@ mkdir -p $HOMEDIR/$user/www/$domain \
     $USER_DATA/domain/$domain
 
 # Changing file owner & permission
-/bin/chown $user:$user $HOMEDIR/$user/www/$domain
+/bin/chown $user:jailed $HOMEDIR/$user/www/$domain
 
 conf="$USER_DATA/domain/$domain/nginx.conf"
 cat $AHKA/data/templates/nginx/default.tpl | \
