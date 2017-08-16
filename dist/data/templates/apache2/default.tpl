@@ -1,9 +1,9 @@
 <VirtualHost 127.0.0.1:8080>
     ServerName %domain%
     ServerAdmin %email%
-    DocumentRoot /home/%user%/www
+    DocumentRoot /home/%user%/www/%domain%
 
-    <Directory /home/%user%/www/>
+    <Directory /home/%user%/www/%domain%/>
         AllowOverride All
         Options -Indexes
         Require all granted
@@ -36,4 +36,3 @@
     </IfModule>
     </IfModule>
 </VirtualHost>
-
