@@ -106,6 +106,10 @@ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /usr/local/ahkacp/ss
 useradd -m admin
 echo -e "123456\n123456\n" | passwd admin
 
+sed -i 's@^\(Subsystem sftp\).*$@\1 internal-sftp@' /etc/ssh/sshd_config
+echo -e "Match Group jailed\n\tChrootDirectory %h\n\tX11Forwarding no\n\tAllowTcpForwarding no\n\tForceCommand internal-sftp" >> /etc/ssh/sshd_config
+/usr/sbin/addgroup --system jailed
+
 if [[ ! -f /usr/bin/sudo ]]; then
   apt-get install sudo -y
   echo "admin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
