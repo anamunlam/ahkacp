@@ -33,3 +33,8 @@ cat $AHKA/data/templates/apache2/default.tpl | \
         -e "s|%email%|info@$domain|g" \
         -e "s|%user%|$user|g" \
 >> $conf
+
+conf="$USER_DATA/domain/$domain/php.conf"
+cat $AHKA/data/templates/php7.0-fpm/default.tpl | \
+    sed -e "s|%user%|$user|g" \
+>> $conf
