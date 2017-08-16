@@ -123,7 +123,7 @@ RAM=$( free -m | awk '/Mem/ {print $2}' )
 RAM=$( awk 'BEGIN{printf "%i", '$RAM' - 256}' )
 MAXCHILD=$( awk 'BEGIN{printf "%i", '$RAM' / 30}' )
 
-echo "[anam]" > /etc/php/7.0/fpm/pool.d/admin.conf
+echo "[admin]" > /etc/php/7.0/fpm/pool.d/admin.conf
 echo "user = admin" >> /etc/php/7.0/fpm/pool.d/admin.conf
 echo "group = admin" >> /etc/php/7.0/fpm/pool.d/admin.conf
 echo "listen = /run/php/php7.0-fpm-admin.sock" >> /etc/php/7.0/fpm/pool.d/admin.conf
