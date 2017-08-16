@@ -24,7 +24,11 @@ cat $AHKA/data/templates/nginx/default.tpl | \
     sed -e "s|%domain%|$domain|g" \
         -e "s|%alias%|${aliases//,/ }|g" \
         -e "s|%user%|$user|g" \
->> $conf
+> $conf
+
+if [ -z "$(grep "$conf" /etc/nginx/conf.d/ahka.conf)" ]; then
+    echo "include $conf;" >> /etc/nginx/conf.d/ahka.conf
+fi
 
 conf="$USER_DATA/domain/$domain/apache2.conf"
 cat $AHKA/data/templates/apache2/default.tpl | \
@@ -32,9 +36,21 @@ cat $AHKA/data/templates/apache2/default.tpl | \
         -e "s|%alias%|${aliases//,/ }|g" \
         -e "s|%email%|info@$domain|g" \
         -e "s|%user%|$user|g" \
->> $conf
+> $conf
+
+if [ -z "$(grep "$conf" /etc/apache2/conf-enabled/ahka.conf)" ]; then
+    echo "include $conf;" >> /etc/apache2/conf-enabled/ahka.conf
+fi
 
 conf="$USER_DATA/domain/$domain/php.conf"
 cat $AHKA/data/templates/php7.0-fpm/default.tpl | \
     sed -e "s|%user%|$user|g" \
->> $conf
+> $conf
+
+if [ -z "$(grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
+    echo "include $conf;" >> /etc/php/7.0/fpm/pool.d/ahka.conf
+fi
+
+/etc/init.d/php7.0-fpm reload
+/etc/init.d/apache2 reload
+/etc/init.d/nginx reload
