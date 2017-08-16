@@ -1,0 +1,17 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+user=$1
+
+#includes
+source $AHKA/func/main.sh
+
+if [ "$user" = 'admin' ]; then
+  echo "default user, cannot be deleted!"
+  exit 1
+fi
+
+/usr/sbin/userdel -r $user >> /dev/null 2>&1
+/bin/rm -rf $HOMEDIR/$user
+/bin/rm -rf $USER_DATA
+exit
