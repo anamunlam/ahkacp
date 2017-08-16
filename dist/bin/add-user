@@ -34,7 +34,7 @@ echo -e "${password}\n${password}\n" | /usr/bin/passwd "$user"
 /bin/chmod 755 $HOMEDIR/$user
 /bin/chown $user:jailed $HOMEDIR/$user/*
 
-mkdir -p $USER_DATA/ssl $USER_DATA/dns
+mkdir -p $USER_DATA/ssl $USER_DATA/dns $USER_DATA/domain
 
 echo "FNAME='$fname'
 LNAME='$lname'
