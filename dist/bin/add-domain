@@ -1,0 +1,35 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+user=$1
+domain=$2
+aliases=$3
+
+#includes
+source $AHKA/func/main.sh
+
+# Reading user values
+source $USER_DATA/user.conf
+
+# Creating domain directories
+mkdir -p $HOMEDIR/$user/www/$domain \
+    $HOMEDIR/$user/www/$domain \
+    $USER_DATA/domain/$domain
+
+# Changing file owner & permission
+/bin/chown $user:$user $HOMEDIR/$user/www/$domain
+
+conf="$USER_DATA/domain/$domain/nginx.conf"
+cat $AHKA/data/templates/nginx/default.tpl | \
+    sed -e "s|%domain%|$domain|g" \
+        -e "s|%alias%|${aliases//,/ }|g" \
+        -e "s|%user%|$user|g" \
+>> $conf
+
+conf="$USER_DATA/domain/$domain/apache2.conf"
+cat $AHKA/data/templates/apache2/default.tpl | \
+    sed -e "s|%domain%|$domain|g" \
+        -e "s|%alias%|${aliases//,/ }|g" \
+        -e "s|%email%|info@$domain|g" \
+        -e "s|%user%|$user|g" \
+>> $conf
