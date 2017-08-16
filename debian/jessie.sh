@@ -106,6 +106,11 @@ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /usr/local/ahkacp/ss
 useradd -m admin
 echo -e "123456\n123456\n" | passwd admin
 
+if [[ ! -f /usr/bin/sudo ]]; then
+  apt-get install sudo -y
+  echo "admin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+fi
+
 wget -qO /etc/nginx/sites-available/admin.conf "https://github.com/anamunlam/ahkacp/raw/master/debian/nginx_site_admin_php7.0.conf" --no-check-certificate
 ln -s /etc/nginx/sites-available/admin.conf /etc/nginx/sites-enabled/admin.conf
 
