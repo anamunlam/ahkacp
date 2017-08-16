@@ -34,5 +34,11 @@ echo -e "${password}\n${password}\n" | /usr/bin/passwd "$user"
 /bin/chmod 755 $HOMEDIR/$user
 /bin/chown $user:jailed $HOMEDIR/$user/*
 
+mkdir -p $USER_DATA/ssl $USER_DATA/dns
+
+echo "FNAME='$fname'
+LNAME='$lname'
+CONTACT='$email'" > $USER_DATA/user.conf
+
 echo "User added"
 exit
