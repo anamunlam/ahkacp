@@ -48,7 +48,7 @@ cat $AHKA/data/templates/php7.0-fpm/default.tpl | \
 > $conf
 
 if [ -z "$(grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
-    echo "include $conf;" >> /etc/php/7.0/fpm/pool.d/ahka.conf
+    echo "include=$conf" >> /etc/php/7.0/fpm/pool.d/ahka.conf
 fi
 
 /etc/init.d/php7.0-fpm reload
