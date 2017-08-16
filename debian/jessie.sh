@@ -139,6 +139,7 @@ echo "chdir = /" >> /etc/php/7.0/fpm/pool.d/admin.conf
 #end admin
 
 echo -e "${YELLOW}Restarting service...${PLAIN}"
+service ssh restart
 service php7.0-fpm restart
 service nginx restart
 
