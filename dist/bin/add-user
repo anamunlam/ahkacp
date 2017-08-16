@@ -1,0 +1,38 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+user=$1
+password=$2; HIDE=2
+email=$3
+fname=$4
+lname=$5
+
+#includes
+source $AHKA/func/main.sh
+
+is_user_free() {
+  check_sysuser=$(cut -f 1 -d : /etc/passwd | grep "^$user$" )
+  if [ ! -z "$check_sysuser" ] || [ -e "$USER_DATA" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+if is_user_free "user"; then
+  echo "user $user exists"
+  exit 1
+fi
+
+#adding user
+/usr/sbin/useradd "$user" -g jailed -c "$email" -m -d "$HOMEDIR/$user"
+echo -e "${password}\n${password}\n" | /usr/bin/passwd "$user"
+
+#building directory tree
+/bin/mkdir $HOMEDIR/$user/docs $HOMEDIR/$user/tmp $HOMEDIR/$user/www
+/bin/chown root:root $HOMEDIR/$user
+/bin/chmod 755 $HOMEDIR/$user
+/bin/chown $user:jailed $HOMEDIR/$user/*
+
+echo "User added"
+exit
