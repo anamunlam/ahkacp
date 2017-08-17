@@ -45,6 +45,7 @@ fi
 conf="$USER_DATA/domain/$domain/php.conf"
 cat $AHKA/data/templates/php7.0-fpm/default.tpl | \
     sed -e "s|%user%|$user|g" \
+        -e "s|%domain%|$domain|g" \
 > $conf
 
 if [ -z "$(grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
