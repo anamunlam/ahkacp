@@ -13,3 +13,4 @@ pm.max_requests = 200
 chroot = /home/%user%
 chdir = /
 php_admin_value[doc_root] = /www/%domain%
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
