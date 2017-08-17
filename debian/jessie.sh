@@ -28,7 +28,13 @@ apt-get update
 
 #apache and php
 echo -e "${YELLOW}Installing Apache and PHP${PLAIN}"
-apt-get install apache2 php7.0-cli php7.0-curl php7.0-dev php7.0-zip php7.0-fpm php7.0-gd php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-mbstring php7.0-opcache -y
+apt-get install apache2 libapache2-mod-rpaf php7.0-cli php7.0-curl php7.0-dev php7.0-zip php7.0-fpm php7.0-gd php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-mbstring php7.0-opcache -y
+
+a2enmod proxy_fcgi setenvif
+a2enconf php7.0-fpm
+a2enmod rewrite
+a2enmod remoteip
+a2enmod rpaf
 
 echo -e "${YELLOW}Configuring PHP...${PLAIN}"
 sed -i 's/pm.max_children = .*/pm.max_children = 10/' /etc/php/7.0/fpm/pool.d/www.conf
@@ -50,12 +56,10 @@ sed -i 's@^\(Listen\) 80$@\1 127.0.0.1:8080@' /etc/apache2/ports.conf
 sed -i 's@^\(<VirtualHost\) \*\:80@\1 127.0.0.1:8080>@' /etc/apache2/sites-available/000-default.conf
 
 echo "RemoteIPHeader X-Forwarded-For" > /etc/apache2/mods-enabled/remoteip.conf
-echo "RemoteIPTrustedProxy 127.0.0.1" > /etc/apache2/mods-enabled/remoteip.conf
+echo "RemoteIPInternalProxy 127.0.0.1" > /etc/apache2/mods-enabled/remoteip.conf
 
-a2enmod proxy_fcgi setenvif
-a2enmod rewrite
-a2enmod remoteip
-a2enconf php7.0-fpm
+sed -i 's@^#\(\s+RPAFheader X-Real-IP\)$@\1@' /etc/apache2/mods-available/rpaf.conf
+
 service apache2 restart
 #end apache and php
 
