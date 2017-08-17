@@ -12,3 +12,4 @@ pm.max_spare_servers = 4
 pm.max_requests = 200
 chroot = /home/%user%
 chdir = /
+php_admin_value[doc_root] = /www/%domain%
