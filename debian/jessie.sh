@@ -58,7 +58,7 @@ sed -i 's@^\(<VirtualHost\) \*\:80@\1 127.0.0.1:8080>@' /etc/apache2/sites-avail
 echo "RemoteIPHeader X-Forwarded-For" > /etc/apache2/mods-enabled/remoteip.conf
 echo "RemoteIPInternalProxy 127.0.0.1" > /etc/apache2/mods-enabled/remoteip.conf
 
-sed -i 's@^#\(\s+RPAFheader X-Real-IP\)$@ \1@' /etc/apache2/mods-available/rpaf.conf
+sed -i 's@^#\(   RPAFheader X-Real-IP\)$@ \1@' /etc/apache2/mods-available/rpaf.conf
 
 service apache2 restart
 #end apache and php
