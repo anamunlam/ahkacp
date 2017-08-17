@@ -21,7 +21,7 @@
         </IfModule>
 
         <FilesMatch ".+\.ph(p[3457]?|t|tml)$">
-            SetHandler "proxy:unix:/run/php/php7.0-fpm-%user%.sock"
+            SetHandler "proxy:unix:/run/php/php7.0-fpm-%user%.sock|fcgi://%user%"
         </FilesMatch>
         <FilesMatch ".+\.phps$">
             # Deny access to raw php sources by default
