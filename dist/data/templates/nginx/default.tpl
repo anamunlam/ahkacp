@@ -14,7 +14,7 @@ server {
 
     error_page 500 502 503 504 /error_50x.html;
     location = /error_50x.html {
-        root root /home/%user%/www/%domain%/error_docs;
+        root /home/%user%/www/%domain%/error_docs;
         internal;
     }
 
