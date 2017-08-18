@@ -10,6 +10,12 @@
     ErrorDocument 502 /error_docs/50x.html
     ErrorDocument 503 /error_docs/50x.html
     ErrorDocument 504 /error_docs/50x.html
+    
+    <Directory /home/%user%/www/%domain%/error_docs/>
+        AllowOverride All
+        Options -Indexes
+        Require all granted
+    </Directory>
 
     <Directory /home/%user%/www/%domain%/public_html/>
         AllowOverride All
