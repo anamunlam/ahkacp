@@ -1,9 +1,9 @@
 <VirtualHost 127.0.0.1:8080>
     ServerName %domain%
     ServerAdmin %email%
-    DocumentRoot /home/%user%/www/%domain%
+    DocumentRoot /home/%user%/www/%domain%/public_html
 
-    <Directory /home/%user%/www/%domain%/>
+    <Directory /home/%user%/www/%domain%/public_html/>
         AllowOverride All
         Options -Indexes
         Require all granted
