@@ -1,7 +1,7 @@
 server {
     listen 80;
     server_name %domain% %alias%;
-    root /home/%user%/www/%domain%;
+    root /home/%user%/www/%domain%/public_html;
     index index.php index.html;
     access_log   /var/log/nginx/%domain%-access.log;
     error_log    /var/log/nginx/%domain%-error.log error;
