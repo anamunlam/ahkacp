@@ -6,6 +6,12 @@ server {
     access_log   /var/log/nginx/%domain%-access.log;
     error_log    /var/log/nginx/%domain%-error.log error;
     
+    error_page 403 /403.html;
+    location = /403.html {
+        root /home/%user%/www/%domain%/error_docs;
+        internal;
+    }
+    
     error_page 404 /404.html;
     location = /404.html {
         root /home/%user%/www/%domain%/error_docs;
