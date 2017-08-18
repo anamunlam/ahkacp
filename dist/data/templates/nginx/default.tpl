@@ -6,14 +6,14 @@ server {
     access_log   /var/log/nginx/%domain%-access.log;
     error_log    /var/log/nginx/%domain%-error.log error;
     
-    error_page 404 /error_404.html;
-    location = /error_404.html {
+    error_page 404 /404.html;
+    location = /404.html {
         root /home/%user%/www/%domain%/error_docs;
         internal;
     }
 
-    error_page 500 502 503 504 /error_50x.html;
-    location = /error_50x.html {
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
         root /home/%user%/www/%domain%/error_docs;
         internal;
     }
