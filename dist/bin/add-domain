@@ -13,11 +13,24 @@ source $USER_DATA/user.conf
 
 # Creating domain directories
 mkdir -p $HOMEDIR/$user/www/$domain \
-    $HOMEDIR/$user/www/$domain \
+    $HOMEDIR/$user/www/$domain/error_docs \
     $USER_DATA/domain/$domain
+    
+# Passing default value
+defval="$HOMEDIR/$user/www/$domain/error_docs/403.html"
+cat $AHKA/data/templates/default/403.html | \
+    sed -e "s|%domain%|$domain|g" \
+> $defval
 
-# Changing file owner & permission
-/bin/chown $user:jailed $HOMEDIR/$user/www/$domain
+defval="$HOMEDIR/$user/www/$domain/error_docs/404.html"
+cat $AHKA/data/templates/default/404.html | \
+    sed -e "s|%domain%|$domain|g" \
+> $defval
+
+defval="$HOMEDIR/$user/www/$domain/error_docs/50x.html"
+cat $AHKA/data/templates/default/50x.html | \
+    sed -e "s|%domain%|$domain|g" \
+> $defval
 
 conf="$USER_DATA/domain/$domain/nginx.conf"
 cat $AHKA/data/templates/nginx/default.tpl | \
@@ -52,6 +65,10 @@ if [ -z "$(grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
     echo "include=$conf" >> /etc/php/7.0/fpm/pool.d/ahka.conf
 fi
 
+# Changing file owner & permission
+/bin/chown -R $user:jailed $HOMEDIR/$user/www/$domain
+
+# Reload service
 /etc/init.d/php7.0-fpm reload
 /etc/init.d/apache2 reload
 /etc/init.d/nginx reload
