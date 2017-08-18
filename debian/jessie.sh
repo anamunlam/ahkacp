@@ -89,7 +89,7 @@ wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp
 
 #admin
 mkdir -p /usr/local/ahkacp/ssl
-mkdir -p /usr/local/ahkacp/data/users
+mkdir -p /usr/local/ahkacp/data/users/admin
 wget -qO master.zip "https://github.com/anamunlam/ahkacp/archive/master.zip" --no-check-certificate
 unzip master.zip
 cp -rf ahkacp-master/dist/* /usr/local/ahkacp
