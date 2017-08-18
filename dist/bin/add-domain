@@ -14,6 +14,7 @@ source $USER_DATA/user.conf
 # Creating domain directories
 mkdir -p $HOMEDIR/$user/www/$domain \
     $HOMEDIR/$user/www/$domain/error_docs \
+    $HOMEDIR/$user/www/$domain/public_html \
     $USER_DATA/domain/$domain
     
 # Passing default value
@@ -32,6 +33,12 @@ cat $AHKA/data/templates/default/50x.html | \
     sed -e "s|%domain%|$domain|g" \
 > $defval
 
+defval="$HOMEDIR/$user/www/$domain/public_html/index.html"
+cat $AHKA/data/templates/default/index.html | \
+    sed -e "s|%domain%|$domain|g" \
+> $defval
+
+# Passing config value
 conf="$USER_DATA/domain/$domain/nginx.conf"
 cat $AHKA/data/templates/nginx/default.tpl | \
     sed -e "s|%domain%|$domain|g" \
