@@ -2,6 +2,14 @@
     ServerName %domain%
     ServerAdmin %email%
     DocumentRoot /home/%user%/www/%domain%/public_html
+    
+    Alias /error_docs/ /home/%user%/www/%domain%/error_docs/
+    ErrorDocument 403 /error_docs/403.html
+    ErrorDocument 404 /error_docs/404.html
+    ErrorDocument 500 /error_docs/50x.html
+    ErrorDocument 502 /error_docs/50x.html
+    ErrorDocument 503 /error_docs/50x.html
+    ErrorDocument 504 /error_docs/50x.html
 
     <Directory /home/%user%/www/%domain%/public_html/>
         AllowOverride All
