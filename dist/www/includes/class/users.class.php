@@ -25,17 +25,20 @@ class Users
     {
         $return = 'Failed, wrong userid or password';
         $userid = trim($userid);
-        if(!empty($userid) && !empty($password))
+        if(!empty($userid) && !empty($password) && $userid!='root')
         {
-            $shadow = shell_exec('sudo grep "^'.$userid.':" /etc/shadow | cut -f 2 -d :');
-            $shadow = preg_replace('@\s+@', '', $shadow);
-            if(!empty($shadow))
+            if(file_exists(AHKA.'/data/users/'.$userid))
             {
-                $pass = explode('$', $shadow);
-                if(crypt($password, '$'.$pass[1].'$'.$pass[2].'$')==$shadow)
+                $shadow = shell_exec('sudo grep "^'.$userid.':" /etc/shadow | cut -f 2 -d :');
+                $shadow = preg_replace('@\s+@', '', $shadow);
+                if(!empty($shadow))
                 {
-                    $return = true;
-                    $_SESSION['userid'] = $userid;
+                    $pass = explode('$', $shadow);
+                    if(crypt($password, '$'.$pass[1].'$'.$pass[2].'$')==$shadow)
+                    {
+                        $return = true;
+                        $_SESSION['userid'] = $userid;
+                    }
                 }
             }
         }
