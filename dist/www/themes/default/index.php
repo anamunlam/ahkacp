@@ -5,6 +5,7 @@ if(!defined('_WORKDIR_'))
 }
 
 $users_->CheckAuth();
+$server_ = new \Server;
 
 require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_->GetConf('theme').DIRECTORY_SEPARATOR.'header.php');
 require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_->GetConf('theme').DIRECTORY_SEPARATOR.'nav.php');
@@ -24,9 +25,12 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <span class="panel-title">Server Info</span>
+                        <span class="panel-title"><?php echo($server_->Hostname()); ?></span>
+                        <span class="pull-right"><?php echo($server_->Uptime()); ?></span>
                     </div>
-                    <div class="panel-body">sdsdsd</div>
+                    <div class="panel-body">
+                        <pre><code><?php echo(implode("\n", $server_->RAM())); ?></code></pre>
+                    </div>
                 </div>
             </div>
         </div>

@@ -567,6 +567,16 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
     color: #000000;
 }
 
+pre {
+    overflow-x: auto;
+    background-color: #333;
+    color: #fff
+}
+pre code {
+    overflow-wrap: normal;
+    white-space: pre;
+}
+
 #page {
     margin-left: 5px;
 }
