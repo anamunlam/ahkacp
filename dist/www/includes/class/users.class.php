@@ -84,7 +84,13 @@ class Users
     
     public function Add($userid, $password, $fname, $lname, $email)
     {
-        exec(AHKA_CMD.'user-add "'.$userid.'" "'.$password.'" "'.$email.'" "'.$fname.'" "'.$lname.'"', $output, $return_val);
+        $userid = escapeshellarg(trim($userid));
+        $fname = escapeshellarg(trim($fname));
+        $lname = escapeshellarg(trim($lname));
+        $email = escapeshellarg(trim($email));
+        $password = escapeshellarg($password);
+        
+        exec(AHKA_CMD.'user-add '.$userid.' '.$password.' '.$email.' '.$fname.' '.$lname, $output, $return_val);
         unset($output);
         if($return_val>0)
         {
