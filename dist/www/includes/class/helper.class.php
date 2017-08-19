@@ -86,6 +86,52 @@ class Helper
         return $days > 0 ? $days . ' day'.($days > 1 ? 's' : '') : $hours.':'.$mins.':'.$seconds;
     }
     
+    public function IsPost($data=array(), $check)
+    {
+        $return = true;
+        if(is_array($check))
+        {
+            foreach($check as $val)
+            {
+                if(!isset($data[$val]))
+                {
+                    $return = false;
+                }
+            }
+        }
+        else
+        {
+            if(!isset($data[$check]))
+            {
+                $return = false;
+            }
+        }
+        return $return;
+    }
+    
+    public function IsNotEmpty($data=array(), $check)
+    {
+        $return = true;
+        if(is_array($check))
+        {
+            foreach($check as $val)
+            {
+                if($data[$val]=='')
+                {
+                    $return = false;
+                }
+            }
+        }
+        else
+        {
+            if($data[$check]=='')
+            {
+                $return = false;
+            }
+        }
+        return $return;
+    }
+    
     /**
      * Generate alphanumeric random string
      * @return string

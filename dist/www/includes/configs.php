@@ -6,4 +6,4 @@ $configs = array(
 );
 
 define('AHKA', '/usr/local/ahkacp');
-define('AHKA_CMD', '/bin/bash'.AHKA.'/bin/');
+define('AHKA_CMD', 'sudo /bin/bash '.AHKA.'/bin/');

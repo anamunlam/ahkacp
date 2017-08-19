@@ -14,7 +14,14 @@ if(!defined('_WORKDIR_'))
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/genre" title="Genre">Genre</a></li>
+                <?php
+                if($_SESSION['userid']=='admin')
+                {
+                    ?>
+                    <li><a href="/users" title="Users">Users</a></li>
+                    <?php
+                }
+                ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo($_SESSION['userid']); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">

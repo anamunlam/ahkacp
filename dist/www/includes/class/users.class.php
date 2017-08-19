@@ -45,4 +45,51 @@ class Users
         
         return $return;
     }
+    
+    public function Lists($limit=false, $offset=0)
+    {
+        $return = array();
+        $list = array_diff(scandir(AHKA.'/data/users'), array('..', '.'));
+        //$list = array_values($list);
+        $i=0;
+        foreach($list as $user)
+        {
+            $return[$i]['userid'] = $user;
+            $fh = fopen(AHKA.'/data/users/'.$user.'/user.conf', 'r');
+            while($line = fgets($fh))
+            {
+                $pieces = array();
+                if(preg_match('/^FNAME=\'(.*)?\'$/', $line, $pieces))
+                {
+                    $return[$i]['fname'] = $pieces[1];
+                }
+                if(preg_match('/^LNAME=\'(.*)?\'$/', $line, $pieces))
+                {
+                    $return[$i]['lname'] = $pieces[1];
+                }
+                if(preg_match('/^CONTACT=\'(.*)?\'$/', $line, $pieces))
+                {
+                    $return[$i]['contact'] = $pieces[1];
+                    break;
+                }
+            }
+            $i++;
+        }
+        if($limit!==false)
+        {
+            return array_slice($return, $offset, $limit);
+        }
+        return $return;
+    }
+    
+    public function Add($userid, $password, $fname, $lname, $email)
+    {
+        exec(AHKA_CMD.'user-add "'.$userid.'" "'.$password.'" "'.$email.'" "'.$fname.'" "'.$lname.'"', $output, $return_val);
+        unset($output);
+        if($return_val>0)
+        {
+            return false;
+        }
+        return true;
+    }
 }
