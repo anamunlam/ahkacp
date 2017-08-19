@@ -24,8 +24,8 @@ if is_user_free; then
   exit 1
 fi
 
-if [[ ! "$3" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
-  echo "invalid email format :: $3"
+if [[ ! "$user" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
+  echo "invalid email format :: $user"
   exit 2
 fi
 
