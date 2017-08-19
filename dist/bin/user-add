@@ -19,9 +19,14 @@ is_user_free() {
   fi
 }
 
-if is_user_free "user"; then
+if is_user_free; then
   echo "user $user exists"
   exit 1
+fi
+
+if [[ ! "$3" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
+  echo "invalid email format :: $3"
+  exit 2
 fi
 
 #adding user
