@@ -1,11 +1,13 @@
 <?php
 if(!defined('_WORKDIR_'))
 {
+    header('location:/');
     exit(1);
 }
 
 if($_SESSION['userid']!='admin')
 {
+    header('location:/');
     exit(2);
 }
 

@@ -1,6 +1,7 @@
 <?php
 if(!defined('_WORKDIR_'))
 {
+    header('location:/');
     exit;
 }
 
