@@ -107,7 +107,7 @@ class Users
         {
             $shadow = shell_exec('sudo grep "^'.$userid.':" /etc/shadow | cut -f 2 -d :');
             $shadow = preg_replace('@\s+@', '', $shadow);
-            if(empty($shadow))
+            if(!empty($shadow))
             {
                 $pass = explode('$', $shadow);
                 if(crypt($old_pw, '$'.$pass[1].'$'.$pass[2].'$')==$shadow)
