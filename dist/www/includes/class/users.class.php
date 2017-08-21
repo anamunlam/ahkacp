@@ -98,4 +98,30 @@ class Users
         }
         return true;
     }
+    
+    public function ChangePass($old_pw, $new_pw, $con_pw)
+    {
+        $userid = trim($_SESSION['userid']);
+        
+        if($new_pw==$con_pw)
+        {
+            $shadow = shell_exec('sudo grep "^'.$userid.':" /etc/shadow | cut -f 2 -d :');
+            $shadow = preg_replace('@\s+@', '', $shadow);
+            if(empty($shadow))
+            {
+                $pass = explode('$', $shadow);
+                if(crypt($old_pw, '$'.$pass[1].'$'.$pass[2].'$')==$shadow)
+                {
+                    exec(AHKA_CMD.'user-change-password '.escapeshellarg($userid).' '.escapeshellarg($new_pw), $output, $return_val);
+                    unset($output);
+                    if($return_val==0)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
 }
