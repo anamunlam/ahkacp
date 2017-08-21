@@ -25,7 +25,7 @@ if(!defined('_WORKDIR_'))
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo($_SESSION['userid']); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/report-server">Password</a></li>
+                        <li><a href="/password">Password</a></li>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
