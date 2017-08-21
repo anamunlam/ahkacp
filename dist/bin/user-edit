@@ -18,5 +18,5 @@ echo "FNAME='$fname'
 LNAME='$lname'
 CONTACT='$email'" > $USER_DATA/user.conf
 
-echo "User added"
+echo "User detail changed"
 exit
