@@ -11,7 +11,7 @@ source $AHKA/func/main.sh
 
 if [[ ! "$email" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
   echo "invalid email format :: $email"
-  exit 2
+  exit 1
 fi
 
 echo "FNAME='$fname'
