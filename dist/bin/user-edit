@@ -1,0 +1,22 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+user=$1
+email=$2
+fname=$3
+lname=$4
+
+#includes
+source $AHKA/func/main.sh
+
+if [[ ! "$email" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
+  echo "invalid email format :: $email"
+  exit 2
+fi
+
+echo "FNAME='$fname'
+LNAME='$lname'
+CONTACT='$email'" > $USER_DATA/user.conf
+
+echo "User added"
+exit
