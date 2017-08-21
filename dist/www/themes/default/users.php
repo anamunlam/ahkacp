@@ -30,6 +30,24 @@ if($helper_->IsPost($_POST, 'act'))
             }
         }
     }
+    else if($_POST['act']=='edit')
+    {
+        if($helper_->IsPost($_POST, array('userid', 'password', 'fname', 'lname', 'email')))
+        {
+            if($helper_->IsNotEmpty($_POST, array('userid', 'fname', 'lname', 'email')))
+            {
+                $ret_ = $users_->Edit($_POST['userid'], $_POST['password'], $_POST['fname'], $_POST['lname'], $_POST['email']);
+                if($ret_['status']===true)
+                {
+                    $msg_ = Helper::Alert('success', $ret_['msg']);
+                }
+                else
+                {
+                    $msg_ = Helper::Alert('warning', $ret_['msg']);
+                }
+            }
+        }
+    }
 }
 
 require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_->GetConf('theme').DIRECTORY_SEPARATOR.'header.php');
@@ -85,7 +103,7 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
                                             <td><?php echo($a_users[$i]['lname']) ?></td>
                                             <td><?php echo($a_users[$i]['contact']) ?></td>
                                             <td>
-                                                <button class="btn btn-xs btn-warning users-edit" data-userid="<?php echo($a_users[$i]['userid']); ?>" data-fname="<?php echo($a_users[$i]['fname']); ?>" data-lname="<?php echo($a_users[$i]['lname']); ?>" data-email="<?php echo($a_users[$i]['email']); ?>"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button class="btn btn-xs btn-warning users-edit" data-userid="<?php echo($a_users[$i]['userid']); ?>" data-fname="<?php echo($a_users[$i]['fname']); ?>" data-lname="<?php echo($a_users[$i]['lname']); ?>" data-email="<?php echo($a_users[$i]['contact']); ?>"><span class="glyphicon glyphicon-pencil"></span></button>
                                             </td>
                                         </tr>
                                         <?php

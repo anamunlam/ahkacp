@@ -99,6 +99,41 @@ class Users
         return true;
     }
     
+    public function Edit($userid, $password, $fname, $lname, $email)
+    {
+        $ret['status'] = false;
+        $ret['msg'] = 'Unknown Error';
+        
+        $userid = trim($userid);
+        $fname = trim($fname);
+        $lname = trim($lname);
+        $email = trim($email);
+        
+        exec(AHKA_CMD.'user-edit '.escapeshellarg($userid).' '.escapeshellarg($email).' '.escapeshellarg($fname).' '.escapeshellarg($lname), $output, $return_val);
+        unset($output);
+        if($return_val===1)
+        {
+            $ret['msg'] = 'Invalid email format';
+            return $ret;
+        }
+        
+        if(!empty($password))
+        {
+            exec(AHKA_CMD.'user-change-password '.escapeshellarg($userid).' '.escapeshellarg($password), $output, $return_val);
+            unset($output);
+            if($return_val>0)
+            {
+                $ret['msg'] = 'Password failed to change';
+                return $ret;
+            }
+        }
+        
+        $ret['status'] = true;
+        $ret['msg'] = 'User detail changed';
+        
+        return $ret;
+    }
+    
     public function ChangePass($old_pw, $new_pw, $con_pw)
     {
         $userid = trim($_SESSION['userid']);
