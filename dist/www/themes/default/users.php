@@ -58,7 +58,7 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
                     <div class="panel-heading">
                         <span class="panel-title">Users</span>
                         <span class="pull-right">
-                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaladd"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#modaladd"><span class="glyphicon glyphicon-plus"></span></button>
                         </span>
                     </div>
                     <div class="table-responsive">
@@ -85,7 +85,7 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
                                             <td><?php echo($a_users[$i]['lname']) ?></td>
                                             <td><?php echo($a_users[$i]['contact']) ?></td>
                                             <td>
-                                                <button class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button class="btn btn-xs btn-warning users-edit" data-userid="<?php echo($a_users[$i]['userid']); ?>" data-fname="<?php echo($a_users[$i]['fname']); ?>" data-lname="<?php echo($a_users[$i]['lname']); ?>" data-email="<?php echo($a_users[$i]['email']); ?>"><span class="glyphicon glyphicon-pencil"></span></button>
                                             </td>
                                         </tr>
                                         <?php
@@ -134,5 +134,46 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
         </div>
      </div>
 </div>
+<div id="modaledit" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+     <div class="modal-dialog modal-sm">
+        <div class="modal-content norad">
+            <form method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="userid">UserID</label>
+                        <input type="text" id="userid" class="form-control" autocomplete="off" readonly="yes" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" autocomplete="off" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" name="fname" id="fname" class="form-control" autocomplete="off" placeholder="First Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" name="lname" id="lname" class="form-control" autocomplete="off" placeholder="Last Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" class="form-control" autocomplete="off" placeholder="Email" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Save</button>
+                </div>
+                <input type="hidden" name="userid" id="userid" />
+                <input type="hidden" name="act" value="edit" />
+            </form>
+        </div>
+     </div>
+</div>
 <?php
+$custom_footer[] = '<script type="text/javascript" src="/themes/'.$helper_->GetConf('theme').'/assets/js/javascript.js"></script>';
 require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_->GetConf('theme').DIRECTORY_SEPARATOR.'footer.php');
