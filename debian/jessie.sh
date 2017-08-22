@@ -94,20 +94,6 @@ wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp
 touch /etc/nginx/conf.d/ahka.conf
 #end nginx
 
-#admin
-mkdir -p /usr/local/ahkacp/ssl
-mkdir -p /usr/local/ahkacp/data/users/admin
-echo "FNAME='Super'
-LNAME='Administrator'
-CONTACT=''" > /usr/local/ahkacp/data/users/admin/user.conf
-
-touch /usr/local/ahkacp/data/users/admin/web.conf
-
-wget -qO master.zip "https://github.com/anamunlam/ahkacp/archive/master.zip" --no-check-certificate
-unzip master.zip
-cp -rf ahkacp-master/dist/* /usr/local/ahkacp
-rm -rf ahkacp-master master.zip
-
 servername=$(hostname -f)
 mask1='(([[:alnum:]](-?[[:alnum:]])*)\.)'
 mask2='*[[:alnum:]](-?[[:alnum:]])+\.[[:alnum:]]{2,}'
@@ -118,6 +104,20 @@ if ! [[ "$servername" =~ ^${mask1}${mask2}$ ]]; then
     servername="example.com"
   fi
 fi
+
+#admin
+mkdir -p /usr/local/ahkacp/ssl
+mkdir -p /usr/local/ahkacp/data/users/admin
+echo "FNAME='Super'
+LNAME='Administrator'
+CONTACT='admin@$servername'" > /usr/local/ahkacp/data/users/admin/user.conf
+
+touch /usr/local/ahkacp/data/users/admin/web.conf
+
+wget -qO master.zip "https://github.com/anamunlam/ahkacp/archive/master.zip" --no-check-certificate
+unzip master.zip
+cp -rf ahkacp-master/dist/* /usr/local/ahkacp
+rm -rf ahkacp-master master.zip
 
 openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /usr/local/ahkacp/ssl/certificate.key -out /usr/local/ahkacp/ssl/certificate.crt -subj "/C=ID/ST=Kalimantan Selatan/L=Banjarmasin/O=AhkaNet/CN=${servername}"
 
@@ -159,6 +159,9 @@ echo -e "${YELLOW}Restarting service...${PLAIN}"
 service ssh restart
 service php7.0-fpm restart
 service nginx restart
+
+echo -e "${YELLOW}Adding default web...${PLAIN}"
+/usr/local/ahkacp/bin/web-add admin "$servername"
 
 clear
 ahka
