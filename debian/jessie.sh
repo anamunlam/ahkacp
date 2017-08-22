@@ -155,6 +155,11 @@ echo "pm.max_requests = 200" >> /etc/php/7.0/fpm/pool.d/admin.conf
 echo "chdir = /" >> /etc/php/7.0/fpm/pool.d/admin.conf
 #end admin
 
+rm -rf /var/www/html/index.*
+/bin/cat /usr/local/ahkacp/data/templates/default/index.html | \
+    /bin/sed -e "s|%domain%|$servername|g" \
+> /var/www/html/index.html
+
 echo -e "${YELLOW}Restarting service...${PLAIN}"
 service ssh restart
 service php7.0-fpm restart
