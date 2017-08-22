@@ -160,9 +160,6 @@ service ssh restart
 service php7.0-fpm restart
 service nginx restart
 
-echo -e "${YELLOW}Adding default web...${PLAIN}"
-/bin/bash /usr/local/ahkacp/bin/web-add admin "$servername"
-
 clear
 ahka
 echo "url      : https://server_ip:9003"
