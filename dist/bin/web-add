@@ -4,6 +4,7 @@ AHKA='/usr/local/ahkacp'
 user=$1
 domain=$2
 aliases=$3
+template=${4-default}
 
 #includes
 source $AHKA/func/main.sh
@@ -11,71 +12,74 @@ source $AHKA/func/main.sh
 # Reading user values
 source $USER_DATA/user.conf
 
-# Creating domain directories
-mkdir -p $HOMEDIR/$user/www/$domain \
+# Creating web directories
+/bin/mkdir -p $HOMEDIR/$user/www/$domain \
     $HOMEDIR/$user/www/$domain/error_docs \
     $HOMEDIR/$user/www/$domain/public_html \
     $USER_DATA/domain/$domain
     
 # Passing default value
 defval="$HOMEDIR/$user/www/$domain/error_docs/403.html"
-cat $AHKA/data/templates/default/403.html | \
-    sed -e "s|%domain%|$domain|g" \
+/bin/cat $AHKA/data/templates/default/403.html | \
+    /bin/sed -e "s|%domain%|$domain|g" \
 > $defval
 
 defval="$HOMEDIR/$user/www/$domain/error_docs/404.html"
-cat $AHKA/data/templates/default/404.html | \
-    sed -e "s|%domain%|$domain|g" \
+/bin/cat $AHKA/data/templates/default/404.html | \
+    /bin/sed -e "s|%domain%|$domain|g" \
 > $defval
 
 defval="$HOMEDIR/$user/www/$domain/error_docs/50x.html"
-cat $AHKA/data/templates/default/50x.html | \
-    sed -e "s|%domain%|$domain|g" \
+/bin/cat $AHKA/data/templates/default/50x.html | \
+    /bin/sed -e "s|%domain%|$domain|g" \
 > $defval
 
 defval="$HOMEDIR/$user/www/$domain/public_html/index.html"
-cat $AHKA/data/templates/default/index.html | \
-    sed -e "s|%domain%|$domain|g" \
+/bin/cat $AHKA/data/templates/default/index.html | \
+    /bin/sed -e "s|%domain%|$domain|g" \
 > $defval
 
 # Passing config value
 conf="$USER_DATA/domain/$domain/nginx.conf"
-cat $AHKA/data/templates/nginx/default.tpl | \
-    sed -e "s|%domain%|$domain|g" \
+/bin/cat $AHKA/data/templates/$template/nginx.tpl | \
+    /bin/sed -e "s|%domain%|$domain|g" \
         -e "s|%alias%|${aliases//,/ }|g" \
         -e "s|%user%|$user|g" \
 > $conf
 
-if [ -z "$(grep "$conf" /etc/nginx/conf.d/ahka.conf)" ]; then
-    echo "include $conf;" >> /etc/nginx/conf.d/ahka.conf
+if [ -z "$(/bin/grep "$conf" /etc/nginx/conf.d/ahka.conf)" ]; then
+    /bin/echo "include $conf;" >> /etc/nginx/conf.d/ahka.conf
 fi
 
 conf="$USER_DATA/domain/$domain/apache2.conf"
-cat $AHKA/data/templates/apache2/default.tpl | \
-    sed -e "s|%domain%|$domain|g" \
+/bin/cat $AHKA/data/templates/$template/apache2.tpl | \
+    /bin/sed -e "s|%domain%|$domain|g" \
         -e "s|%alias%|${aliases//,/ }|g" \
         -e "s|%email%|info@$domain|g" \
         -e "s|%user%|$user|g" \
 > $conf
 
-if [ -z "$(grep "$conf" /etc/apache2/conf-enabled/ahka.conf)" ]; then
-    echo "Include $conf" >> /etc/apache2/conf-enabled/ahka.conf
+if [ -z "$(/bin/grep "$conf" /etc/apache2/conf-enabled/ahka.conf)" ]; then
+    /bin/echo "Include $conf" >> /etc/apache2/conf-enabled/ahka.conf
 fi
 
 conf="$USER_DATA/domain/$domain/php.conf"
-cat $AHKA/data/templates/php7.0-fpm/default.tpl | \
-    sed -e "s|%user%|$user|g" \
+/bin/cat $AHKA/data/templates/$template/php7.0-fpm.tpl | \
+    /bin/sed -e "s|%user%|$user|g" \
         -e "s|%domain%|$domain|g" \
 > $conf
 
-if [ -z "$(grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
-    echo "include=$conf" >> /etc/php/7.0/fpm/pool.d/ahka.conf
+if [ -z "$(/bin/grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
+    /bin/echo "include=$conf" >> /etc/php/7.0/fpm/pool.d/ahka.conf
 fi
 
 # Changing file owner & permission
 /bin/chown -R $user:jailed $HOMEDIR/$user/www/$domain
 
 # Reload service
-/etc/init.d/php7.0-fpm reload
-/etc/init.d/apache2 reload
-/etc/init.d/nginx reload
+/etc/init.d/php7.0-fpm reload > /dev/null
+/etc/init.d/apache2 reload > /dev/null
+/etc/init.d/nginx reload > /dev/null
+
+/bin/echo "Web added"
+exit 0

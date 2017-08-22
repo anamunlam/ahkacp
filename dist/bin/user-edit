@@ -10,13 +10,13 @@ lname=$4
 source $AHKA/func/main.sh
 
 if [[ ! "$email" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
-  echo "invalid email format :: $email"
+  /bin/echo "invalid email format :: $email"
   exit 1
 fi
 
-echo "FNAME='$fname'
+/bin/echo "FNAME='$fname'
 LNAME='$lname'
 CONTACT='$email'" > $USER_DATA/user.conf
 
-echo "User detail changed"
-exit
+/bin/echo "User detail changed"
+exit 0

@@ -11,7 +11,7 @@ lname=$5
 source $AHKA/func/main.sh
 
 is_user_free() {
-  check_sysuser=$(cut -f 1 -d : /etc/passwd | grep "^$user$" )
+  check_sysuser=$(/usr/bin/cut -f 1 -d : /etc/passwd | /bin/grep "^$user$" )
   if [ ! -z "$check_sysuser" ] || [ -e "$USER_DATA" ]; then
     return 0
   else
@@ -20,18 +20,18 @@ is_user_free() {
 }
 
 if is_user_free; then
-  echo "user $user exists"
+  /bin/echo "user $user exists"
   exit 1
 fi
 
 if [[ ! "$email" =~ ^[A-Za-z0-9._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,63}$ ]] ; then
-  echo "invalid email format :: $email"
+  /bin/echo "invalid email format :: $email"
   exit 2
 fi
 
 #adding user
 /usr/sbin/useradd "$user" -g jailed -c "$email" -m -d "$HOMEDIR/$user"
-echo -e "${password}\n${password}\n" | /usr/bin/passwd "$user"
+/bin/echo -e "${password}\n${password}\n" | /usr/bin/passwd "$user"
 
 #building directory tree
 /bin/mkdir $HOMEDIR/$user/docs $HOMEDIR/$user/tmp $HOMEDIR/$user/www
@@ -39,11 +39,11 @@ echo -e "${password}\n${password}\n" | /usr/bin/passwd "$user"
 /bin/chmod 755 $HOMEDIR/$user
 /bin/chown $user:jailed $HOMEDIR/$user/*
 
-mkdir -p $USER_DATA/ssl $USER_DATA/dns $USER_DATA/domain
+/bin/mkdir -p $USER_DATA/ssl $USER_DATA/dns $USER_DATA/domain
 
-echo "FNAME='$fname'
+/bin/echo "FNAME='$fname'
 LNAME='$lname'
 CONTACT='$email'" > $USER_DATA/user.conf
 
-echo "User added"
-exit
+/bin/echo "User added"
+exit 0

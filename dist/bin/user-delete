@@ -7,11 +7,13 @@ user=$1
 source $AHKA/func/main.sh
 
 if [ "$user" = 'admin' ]; then
-  echo "default user, cannot be deleted!"
+  /bin/echo "$user is default user, cannot be deleted!"
   exit 1
 fi
 
 /usr/sbin/userdel -r $user >> /dev/null 2>&1
 /bin/rm -rf $HOMEDIR/$user
 /bin/rm -rf $USER_DATA
-exit
+
+/bin/echo "User $user deleted"
+exit 0

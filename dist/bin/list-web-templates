@@ -1,0 +1,6 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+# Argument definition
+format=${1-shell}
+

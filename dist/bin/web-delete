@@ -1,0 +1,30 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+user=$1
+domain=$2
+
+#includes
+source $AHKA/func/main.sh
+
+# Reading user values
+source $USER_DATA/user.conf
+
+#deleting web directories
+/bin/rm -rf $HOMEDIR/$user/www/$domain
+
+#deleting data directories
+/bin/rm -rf $USER_DATA/domain/$domain
+
+#deleting config value
+/bin/echo -n "$(/bin/grep -v "$USER_DATA/domain/$domain" /etc/nginx/conf.d/ahka.conf)" > /etc/nginx/conf.d/ahka.conf
+/bin/echo -n "$(/bin/grep -v "$USER_DATA/domain/$domain" /etc/apache2/conf-enabled/ahka.conf)" > /etc/apache2/conf-enabled/ahka.conf
+/bin/echo -n "$(/bin/grep -v "$USER_DATA/domain/$domain" /etc/php/7.0/fpm/pool.d/ahka.conf)" > /etc/php/7.0/fpm/pool.d/ahka.conf
+
+# Reload service
+/etc/init.d/php7.0-fpm reload > /dev/null
+/etc/init.d/apache2 reload > /dev/null
+/etc/init.d/nginx reload > /dev/null
+
+/bin/echo "Web deleted"
+exit 0
