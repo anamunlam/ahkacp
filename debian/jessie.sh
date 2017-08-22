@@ -45,6 +45,8 @@ sed -i 's/upload_max_filesize = .*/upload_max_filesize = 8M/' /etc/php/7.0/fpm/p
 sed -i 's/max_execution_time = .*/max_execution_time = 60/' /etc/php/7.0/fpm/php.ini
 sed -i 's/max_input_vars = .*/max_input_vars = 5000/' /etc/php/7.0/fpm/php.ini
 
+sed -i 's/;\(process_control_timeout =\).*$/\1 60/' /etc/php/7.0/fpm/php-fpm.conf
+
 echo "zend_extension=opcache.so" > /etc/php/7.0/mods-available/opcache.ini
 echo "opcache.memory_consumption=128" >> /etc/php/7.0/mods-available/opcache.ini
 echo "opcache.max_accelerated_files=10000" >> /etc/php/7.0/mods-available/opcache.ini
