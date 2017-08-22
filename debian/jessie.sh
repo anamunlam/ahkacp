@@ -60,6 +60,9 @@ echo "RemoteIPInternalProxy 127.0.0.1" > /etc/apache2/mods-enabled/remoteip.conf
 
 sed -i 's@^#\(   RPAFheader X-Real-IP\)$@ \1@' /etc/apache2/mods-available/rpaf.conf
 
+touch /etc/apache2/conf-enabled/ahka.conf
+touch /etc/php/7.0/fpm/pool.d/ahka.conf
+
 service apache2 restart
 #end apache and php
 
@@ -85,6 +88,8 @@ if [[ ! -f /etc/nginx/sites-available/default.bak ]]; then
 fi
 
 wget -qO /etc/nginx/sites-available/default "https://github.com/anamunlam/ahkacp/raw/master/debian/nginx_site_detault_php7.0.conf" --no-check-certificate
+
+touch /etc/nginx/conf.d/ahka.conf
 #end nginx
 
 #admin
