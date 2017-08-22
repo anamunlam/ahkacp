@@ -591,3 +591,7 @@ pre code {
     font-weight: 700;
     background-color: #19B5FE;
 }
+
+.table-hover > tbody > tr:hover {
+  background-color: #DFFFFF;
+}

@@ -34,7 +34,7 @@ if(!defined('_WORKDIR_'))
                     <ul class="dropdown-menu">
                         <li><a href="/password">Password</a></li>
                         <li class="divider"></li>
-                        <li><a href="/logout"><?php echo(isset($_SESSION['true_userid'])?'Logout As':'Logout'); ?></a></li>
+                        <li><a href="/logout"><?php echo(isset($_SESSION['true_userid'])?'Logout As '.$_SESSION['userid']:'Logout'); ?></a></li>
                     </ul>
                 </li>
             </ul>

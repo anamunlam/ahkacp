@@ -19,4 +19,17 @@ $(document).ready(function()
         $('#modalloginas #useridb').text($(this).attr('data-userid'));
         $('#modalloginas').modal('show');
     });
+    
+    $('.web-edit').click(function(){
+        $('#modaledit #domain').val($(this).attr('data-domain'));
+        $('#modaledit #alias').val($(this).attr('data-alias'));
+        $('#modaledit #tpl').val($(this).attr('data-tpl'));
+        $('#modaledit').modal('show');
+    });
+    
+    $('.web-delete').click(function(){
+        $('#modaldelete #domain').val($(this).attr('data-domain'));
+        $('#modaldelete #domainb').text($(this).attr('data-domain'));
+        $('#modaldelete').modal('show');
+    });
 });
