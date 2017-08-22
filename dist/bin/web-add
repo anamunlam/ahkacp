@@ -60,7 +60,6 @@ fi
 conf="$USER_DATA/domain/$domain/apache2.conf"
 /bin/cat $AHKA/data/templates/$template/apache2.tpl | \
     /bin/sed -e "s|%domain%|$domain|g" \
-        -e "s|%alias%|${aliases//,/ }|g" \
         -e "s|%email%|info@$domain|g" \
         -e "s|%user%|$user|g" \
 > $conf
