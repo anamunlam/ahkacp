@@ -20,6 +20,7 @@ source $USER_DATA/user.conf
 /bin/echo -n "$(/bin/grep -v "$USER_DATA/domain/$domain" /etc/nginx/conf.d/ahka.conf)" > /etc/nginx/conf.d/ahka.conf
 /bin/echo -n "$(/bin/grep -v "$USER_DATA/domain/$domain" /etc/apache2/conf-enabled/ahka.conf)" > /etc/apache2/conf-enabled/ahka.conf
 /bin/echo -n "$(/bin/grep -v "$USER_DATA/domain/$domain" /etc/php/7.0/fpm/pool.d/ahka.conf)" > /etc/php/7.0/fpm/pool.d/ahka.conf
+/bin/echo -n "$(/bin/grep -v "DOMAIN='$domain'" $USER_DATA/web.conf)" > $USER_DATA/web.conf
 
 # Reload service
 /etc/init.d/php7.0-fpm reload > /dev/null
