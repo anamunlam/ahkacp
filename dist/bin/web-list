@@ -1,0 +1,70 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+# Argument definition
+user=$1
+format=${2-shell}
+
+#includes
+source $AHKA/func/main.sh
+
+# JSON list function
+json_list() {
+    IFS=$'\n'
+    i=1
+    objects=$(grep DOMAIN $USER_DATA/web.conf |wc -l)
+    echo "{"
+    while read str; do
+        eval $str
+        echo -n '    "'$DOMAIN'": {
+        "ALIAS": "'$ALIAS'",
+        "TPL": "'$TPL'"
+    }'
+        if [ "$i" -lt "$objects" ]; then
+            echo ','
+        else
+            echo
+        fi
+        ((i++))
+    done < <(cat $USER_DATA/web.conf)
+    echo '}'
+}
+
+# SHELL list function
+shell_list() {
+    IFS=$'\n'
+    echo -e "DOMAIN\tTPL"
+    echo -e "------\t---"
+    while read str; do
+        eval $str
+        echo -e "$DOMAIN\t$TPL"
+    done < <(cat $USER_DATA/web.conf)
+}
+
+# PLAIN list function
+plain_list() {
+    IFS=$'\n'
+    while read str; do
+        eval $str
+        echo -e "$DOMAIN\t$ALIAS\t$TPL"
+    done < <(cat $USER_DATA/web.conf)
+}
+
+# CSV list function
+csv_list() {
+    IFS=$'\n'
+    echo "DOMAIN,ALIAS,TPL"
+    while read str; do
+        eval $str
+        echo "$DOMAIN,\"$ALIAS\",$TPL"
+    done < <(cat $USER_DATA/web.conf)
+}
+
+case $format in
+    json)   json_list ;;
+    plain)  plain_list ;;
+    csv)    csv_list ;;
+    shell)  shell_list |column -t ;;
+esac
+
+exit 0
