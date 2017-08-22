@@ -14,7 +14,7 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
     <div class="container">
         <div class="row">
             <ul class="breadcrumb">
-                <li class="active">Domain</li>
+                <li class="active">Web</li>
             </ul>
         </div>
     </div>
@@ -25,10 +25,10 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <span class="panel-title">Domain</span>
+                        <span class="panel-title">Web</span>
                     </div>
                     <div class="panel-body">
-                        List Domain
+                        List Web
                     </div>
                 </div>
             </div>
