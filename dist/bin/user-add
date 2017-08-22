@@ -45,5 +45,7 @@ fi
 LNAME='$lname'
 CONTACT='$email'" > $USER_DATA/user.conf
 
+/usr/bin/touch $USER_DATA/web.conf
+
 /bin/echo "User added"
 exit 0

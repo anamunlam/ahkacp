@@ -12,6 +12,12 @@ source $AHKA/func/main.sh
 # Reading user values
 source $USER_DATA/user.conf
 
+#check if domain web already exists
+if [ ! -z "$(/bin/grep "DOMAIN='$domain'" $USER_DATA/web.conf)" ]; then
+    /bin/echo "Web already exists"
+    exit 1
+fi
+
 # Creating web directories
 /bin/mkdir -p $HOMEDIR/$user/www/$domain \
     $HOMEDIR/$user/www/$domain/error_docs \
@@ -72,6 +78,8 @@ conf="$USER_DATA/domain/$domain/php.conf"
 if [ -z "$(/bin/grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
     /bin/echo "include=$conf" >> /etc/php/7.0/fpm/pool.d/ahka.conf
 fi
+
+/bin/echo "DOMAIN='$domain' ALIAS='$aliases' TPL='$template'" >> $USER_DATA/web.conf
 
 # Changing file owner & permission
 /bin/chown -R $user:jailed $HOMEDIR/$user/www/$domain
