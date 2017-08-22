@@ -4,3 +4,52 @@ AHKA='/usr/local/ahkacp'
 # Argument definition
 format=${1-shell}
 
+json_list() {
+    objects=$(/bin/echo "$templates" |/usr/bin/wc -w)
+    i=1
+    echo '['
+    for template in $templates; do
+        if [ "$i" -lt "$objects" ]; then
+            /bin/echo -e  "\t\"$template\","
+        else
+            /bin/echo -e  "\t\"$template\""
+        fi
+        (( ++i))
+    done
+    echo "]"
+}
+
+# SHELL list function
+shell_list() {
+    /bin/echo "TEMPLATE"
+    /bin/echo "--------"
+    for template in $templates; do
+        /bin/echo "$template"
+    done
+}
+
+# PLAIN list function
+plain_list() {
+    for template in $templates; do
+        /bin/echo "$template"
+    done
+}
+
+# CSV list function
+csv_list() {
+    echo "TEMPLATE"
+    for template in $templates; do
+        /bin/echo "$template"
+    done
+}
+
+templates=$(/bin/ls -v "$AHKA/data/templates/")
+
+case $format in
+    json)   json_list ;;
+    plain)  plain_list ;;
+    csv)    csv_list ;;
+    shell)  shell_list ;;
+esac
+
+exit 0
