@@ -46,6 +46,24 @@ class Users
         return $return;
     }
     
+    public function LoginAs($userid)
+    {
+        if(isset($_SESSION['userid']))
+        {
+            if($_SESSION['userid']=='admin')
+            {
+                $userid = trim($userid);
+                if(file_exists(AHKA.'/data/users/'.$userid))
+                {
+                    $_SESSION['true_userid'] = $_SESSION['userid'];
+                    $_SESSION['userid'] = $userid;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     public function Lists($limit=false, $offset=0)
     {
         $return = array();
@@ -131,6 +149,25 @@ class Users
         $ret['status'] = true;
         $ret['msg'] = 'User detail changed';
         
+        return $ret;
+    }
+    
+    public function Delete($userid)
+    {
+        $ret['status'] = false;
+        $ret['msg'] = 'Unknown Error';
+        
+        $userid = trim($userid);
+        exec(AHKA_CMD.'user-delete '.escapeshellarg($userid), $output, $return_val);
+        unset($output);
+        if($return_val>0)
+        {
+            $ret['msg'] = 'Failed to delete user';
+            return $ret;
+        }
+        
+        $ret['status'] = true;
+        $ret['msg'] = 'User deleted';
         return $ret;
     }
     

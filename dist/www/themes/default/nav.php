@@ -14,11 +14,18 @@ if(!defined('_WORKDIR_'))
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="/domain" title="Domain">Domain</a></li>
                 <?php
                 if($_SESSION['userid']=='admin')
                 {
                     ?>
                     <li><a href="/users" title="Users">Users</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Server <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/server-status" title="Status">Status</a></li>
+                        </ul>
+                    </li>
                     <?php
                 }
                 ?>
@@ -27,7 +34,7 @@ if(!defined('_WORKDIR_'))
                     <ul class="dropdown-menu">
                         <li><a href="/password">Password</a></li>
                         <li class="divider"></li>
-                        <li><a href="/logout">Logout</a></li>
+                        <li><a href="/logout"><?php echo(isset($_SESSION['true_userid'])?'Logout As':'Logout'); ?></a></li>
                     </ul>
                 </li>
             </ul>

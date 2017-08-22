@@ -7,4 +7,16 @@ $(document).ready(function()
         $('#modaledit #email').val($(this).attr('data-email'));
         $('#modaledit').modal('show');
     });
+    
+    $('.users-delete').click(function(){
+        $('#modaldelete #userid').val($(this).attr('data-userid'));
+        $('#modaldelete #useridb').text($(this).attr('data-userid'));
+        $('#modaldelete').modal('show');
+    });
+    
+    $('.users-login-as').click(function(){
+        $('#modalloginas #userid').val($(this).attr('data-userid'));
+        $('#modalloginas #useridb').text($(this).attr('data-userid'));
+        $('#modalloginas').modal('show');
+    });
 });
