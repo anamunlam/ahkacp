@@ -14,7 +14,7 @@ if(!defined('_WORKDIR_'))
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/domain" title="Domain">Domain</a></li>
+                <li><a href="/web" title="Web">Web</a></li>
                 <?php
                 if($_SESSION['userid']=='admin')
                 {
