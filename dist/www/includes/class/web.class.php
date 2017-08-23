@@ -6,6 +6,7 @@ class Web
         $domain = escapeshellarg(trim($domain));
         $alias = trim($alias);
         $alias = preg_replace('@\s+@', ',', $alias);
+        $alias = preg_replace('@[^a-z0-9\-\.\,]@', '', strtolower($alias));
         $alias = escapeshellarg($alias);
         $tpl = escapeshellarg(trim($tpl));
         

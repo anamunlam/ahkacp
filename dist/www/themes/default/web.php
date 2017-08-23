@@ -64,7 +64,7 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
 <div class="container">
     <div id="page">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <?php
                 if(isset($msg_))
                 {
@@ -99,9 +99,9 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
                                         ?>
                                         <tr>
                                             <td><?php echo($domain); ?></td>
-                                            <td><?php echo($val['ALIAS']); ?></td>
+                                            <td><?php echo(str_replace(',', ', ', $val['ALIAS'])); ?></td>
                                             <td><?php echo($val['TPL']); ?></td>
-                                            <td class="pull-right">
+                                            <td class="pull-right nowrap">
                                                 <button class="btn btn-xs btn-warning web-edit" title="Edit this web" data-domain="<?php echo($domain); ?>" data-alias="<?php echo($val['ALIAS']); ?>" data-tpl="<?php echo($val['TPL']); ?>"><span class="glyphicon glyphicon-pencil"></span></button>
                                                 <button class="btn btn-xs btn-danger web-delete" title="Delete web" data-domain="<?php echo($domain); ?>"><span class="glyphicon glyphicon-trash"></span></button>
                                             </td>

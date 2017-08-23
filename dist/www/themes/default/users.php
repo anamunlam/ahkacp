@@ -103,7 +103,7 @@ require_once(_WORKDIR_.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$helper_
 <div class="container">
     <div id="page">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <?php
                 if(isset($msg_))
                 {

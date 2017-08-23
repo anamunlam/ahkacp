@@ -595,3 +595,12 @@ pre code {
 .table-hover > tbody > tr:hover {
   background-color: #DFFFFF;
 }
+.table > thead > tr > th.nowrap,
+.table > tbody > tr > th.nowrap,
+.table > tfoot > tr > th.nowrap,
+.table > thead > tr > td.nowrap,
+.table > tbody > tr > td.nowrap,
+.table > tfoot > tr > td.nowrap
+{
+    white-space: nowrap;
+}
