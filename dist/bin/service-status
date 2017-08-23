@@ -1,0 +1,57 @@
+#!/bin/bash
+AHKA='/usr/local/ahkacp'
+
+# Argument definition
+format=${1-shell}
+
+json_list() {
+    objects=$(/bin/echo "$services" |/usr/bin/wc -w)
+    i=1
+    echo '{'
+    for service in $services; do
+        status=$(/etc/init.d/$service status | grep Active | awk '{print $2}')
+        if [ "$i" -lt "$objects" ]; then
+            /bin/echo -e  "\t\"$service\": \"$status\","
+        else
+            /bin/echo -e  "\t\"$service\": \"$status\""
+        fi
+        (( ++i))
+    done
+    echo "}"
+}
+
+# SHELL list function
+shell_list() {
+    /bin/echo -e "SERVICE\t STATUS"
+    /bin/echo -e "--------\t------"
+    for service in $services; do
+        status=$(/etc/init.d/$service status | grep Active | awk '{print $2}')
+        /bin/echo -e "$service\t$status"
+    done
+}
+
+# PLAIN list function
+plain_list() {
+    for service in $services; do
+        status=$(/etc/init.d/$service status | grep Active | awk '{print $2}')
+        /bin/echo -e "$service\t$status"
+    done
+}
+
+# CSV list function
+csv_list() {
+    echo "SERVICE,STATUS"
+    for service in $services; do
+        status=$(/etc/init.d/$service status | grep Active | awk '{print $2}')
+        /bin/echo "\"$service\",\"$status\""
+    done
+}
+
+services=$(/bin/cat $AHKA/data/service.conf)
+
+case $format in
+    json)   json_list ;;
+    plain)  plain_list ;;
+    csv)    csv_list ;;
+    shell)  shell_list |column -t ;;
+esac
