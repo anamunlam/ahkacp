@@ -29,6 +29,24 @@ if($helper_->IsPost($_POST, 'act'))
             }
         }
     }
+    if($_POST['act']=='edit')
+    {
+        if($helper_->IsPost($_POST, array('domain', 'alias', 'tpl')))
+        {
+            if($helper_->IsNotEmpty($_POST, array('domain', 'tpl')))
+            {
+                $ret_ = $web_->Edit($_POST['domain'], $_POST['alias'], $_POST['tpl']);
+                if($ret_['status']===true)
+                {
+                    $msg_ = Helper::Alert('success', $ret_['msg']);
+                }
+                else
+                {
+                    $msg_ = Helper::Alert('warning', $ret_['msg']);
+                }
+            }
+        }
+    }
     else if($_POST['act']=='delete')
     {
         if($helper_->IsPost($_POST, array('domain')))
