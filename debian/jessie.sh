@@ -160,6 +160,10 @@ rm -rf /var/www/html/index.*
     /bin/sed -e "s|%domain%|$servername|g" \
 > /var/www/html/index.html
 
+echo "apache2
+nginx
+php7.0-fpm" > /usr/local/ahkacp/data/service.conf
+
 echo -e "${YELLOW}Restarting service...${PLAIN}"
 service ssh restart
 service php7.0-fpm restart
