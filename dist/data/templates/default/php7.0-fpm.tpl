@@ -1,7 +1,7 @@
-[%user%]
+[%domain%]
 user = %user%
 group = jailed
-listen = /run/php/php7.0-fpm-%user%.sock
+listen = /run/php/php7.0-fpm-%domain%.sock
 listen.owner = www-data
 listen.group = www-data
 pm = dynamic
