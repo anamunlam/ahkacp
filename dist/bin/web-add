@@ -13,10 +13,13 @@ source $AHKA/func/main.sh
 source $USER_DATA/user.conf
 
 #check if domain web already exists
-if [ ! -z "$(/bin/grep "DOMAIN='$domain'" $USER_DATA/web.conf)" ]; then
-    /bin/echo "Web already exists"
-    exit 1
-fi
+listusers=$(/bin/ls -v "$AHKA/data/users/")
+for listuser in $listusers; do
+    if [ ! -z "$(/bin/grep "DOMAIN='$domain'" $AHKA/data/users/$listuser/web.conf)" ]; then
+        /bin/echo "Web already exists"
+        exit 1
+    fi
+done
 
 # Creating web directories
 /bin/mkdir -p $HOMEDIR/$user/www/$domain \
