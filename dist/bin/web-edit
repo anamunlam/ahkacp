@@ -9,23 +9,10 @@ template=${4-default}
 #includes
 source $AHKA/func/main.sh
 
-# Reading user values
-source $USER_DATA/user.conf
-
-#check if domain web already exists
-listusers=$(/bin/ls -v "$AHKA/data/users/")
-for listuser in $listusers; do
-    if [ ! -z "$(/bin/grep "DOMAIN='$domain'" $AHKA/data/users/$listuser/web.conf)" ]; then
-        /bin/echo "Web already exists"
-        exit 1
-    fi
-done
-
-# Creating web directories
-/bin/mkdir -p $HOMEDIR/$user/www/$domain \
-    $HOMEDIR/$user/www/$domain/error_docs \
-    $HOMEDIR/$user/www/$domain/public_html \
-    $USER_DATA/domain/$domain
+if [ -z "$(/bin/grep "DOMAIN='$domain'" $USER_DATA/web.conf)" ]; then
+    /bin/echo "Web not found"
+    exit 1
+fi
 
 # template value
 nginx_tpl="$AHKA/data/templates/$template/nginx.tpl"
@@ -42,27 +29,6 @@ phpfpm_tpl="$AHKA/data/templates/$template/php7.0-fpm.tpl"
 if [ ! -f $phpfpm_tpl ]; then
     phpfpm_tpl="$AHKA/data/templates/default/php7.0-fpm.tpl"
 fi
-
-# Passing default value
-defval="$HOMEDIR/$user/www/$domain/error_docs/403.html"
-/bin/cat $AHKA/data/templates/default/403.html | \
-    /bin/sed -e "s|%domain%|$domain|g" \
-> $defval
-
-defval="$HOMEDIR/$user/www/$domain/error_docs/404.html"
-/bin/cat $AHKA/data/templates/default/404.html | \
-    /bin/sed -e "s|%domain%|$domain|g" \
-> $defval
-
-defval="$HOMEDIR/$user/www/$domain/error_docs/50x.html"
-/bin/cat $AHKA/data/templates/default/50x.html | \
-    /bin/sed -e "s|%domain%|$domain|g" \
-> $defval
-
-defval="$HOMEDIR/$user/www/$domain/public_html/index.html"
-/bin/cat $AHKA/data/templates/default/index.html | \
-    /bin/sed -e "s|%domain%|$domain|g" \
-> $defval
 
 # Passing config value
 conf="$USER_DATA/domain/$domain/nginx.conf"
@@ -97,15 +63,9 @@ if [ -z "$(/bin/grep "$conf" /etc/php/7.0/fpm/pool.d/ahka.conf)" ]; then
     /bin/echo "include=$conf" >> /etc/php/7.0/fpm/pool.d/ahka.conf
 fi
 
+rgx="DOMAIN='$domain'"
+/bin/sed -i "/${rgx//\//\\/}/d" $USER_DATA/web.conf
 /bin/echo "DOMAIN='$domain' ALIAS='$aliases' TPL='$template'" >> $USER_DATA/web.conf
 
-# Changing file owner & permission
-/bin/chown -R $user:jailed $HOMEDIR/$user/www/$domain
-
-# Reload service
-/etc/init.d/php7.0-fpm reload > /dev/null
-/etc/init.d/apache2 reload > /dev/null
-/etc/init.d/nginx reload > /dev/null
-
-/bin/echo "Web added"
+/bin/echo "Change saved"
 exit 0
