@@ -24,6 +24,7 @@ if(!defined('_WORKDIR_'))
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Server <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/server-status" title="Status">Status</a></li>
+                            <li><a href="/server-service" title="Service">Service</a></li>
                         </ul>
                     </li>
                     <?php

@@ -27,5 +27,19 @@ Class Server
         }
         return '';
     }
+    
+    public function PS()
+    {
+        $return = array();
+        exec('sudo ps -aux | grep -v "ps -aux"', $output, $return_var);
+        return $output;
+    }
+    
+    public function Netstat()
+    {
+        $return = array();
+        exec('sudo netstat -lnptu', $output, $return_var);
+        return $output;
+    }
 }
 ?>
